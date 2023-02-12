@@ -22,7 +22,16 @@ const run = async () => {
   const usersCollection = client.db("hubx").collection("usersCollection");
 
   try {
-   
+    app.get("/users", async(req, res) => {
+      const users = await usersCollection.find({}).toArray()
+      res.send(users)
+    });
+
+    app.post("/users", async(req, res) => {
+      const user = req.body;
+      const result = await usersCollection.insertOne(user)
+      res.send(result)
+    });
 
 
   } finally {
